@@ -1,0 +1,18 @@
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/media
+    networks:
+      - dokploy-network
+
+volumes:
+  static_data:
+  media_data:
+
+networks:
+  dokploy-network:
+    external: true

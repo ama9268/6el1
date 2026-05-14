@@ -1,0 +1,117 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-surface">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}6el1 Digital Solutions | Consultoría Estratégica y Soluciones Digitales{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Soluciones digitales de alta gama centradas en IA y minimalismo técnico para empresas innovadoras.{% endblock %}">
+    
+    <!-- Fonts: Geist (Technical) & Inter (Readability) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    {% tailwind_css %}
+    
+    {% block extra_head %}{% endblock %}
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #191c1e;
+        }
+        h1, h2, h3, h4, h5, h6, .font-technical {
+            font-family: 'Geist', sans-serif;
+        }
+        .glass-nav {
+            background: rgba(247, 249, 251, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-inter antialiased">
+    
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center gap-2">
+                        <div class="w-8 h-8 bg-primary rounded-custom flex items-center justify-center">
+                            <span class="text-white font-geist font-bold">6</span>
+                        </div>
+                        <span class="font-geist font-bold text-xl tracking-tight text-on-background">6el1</span>
+                    </a>
+                    <div class="hidden sm:ml-8 sm:flex sm:space-x-8">
+                        <a href="/" class="border-transparent text-on-background hover:text-primary px-1 pt-1 text-sm font-medium transition-colors">Inicio</a>
+                        <a href="#servicios" class="border-transparent text-on-background hover:text-primary px-1 pt-1 text-sm font-medium transition-colors">Servicios</a>
+                        <a href="#contacto" class="border-transparent text-on-background hover:text-primary px-1 pt-1 text-sm font-medium transition-colors">Contacto</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'dashboard:home' %}" class="text-sm font-medium text-on-background hover:text-primary transition-colors">Dashboard</a>
+                        <form method="post" action="{% url 'logout' %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-surface-container hover:bg-surface-container-high text-on-background px-4 py-2 rounded-custom text-sm font-medium transition-all">Salir</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="text-sm font-medium text-on-background hover:text-primary transition-colors">Acceso</a>
+                        <a href="{% url 'dashboard:home' %}" class="bg-primary hover:bg-opacity-90 text-white px-5 py-2 rounded-custom text-sm font-bold shadow-lg shadow-primary/20 transition-all">Empezar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container border-t border-outline-variant">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 bg-primary rounded-custom flex items-center justify-center">
+                            <span class="text-white font-geist font-bold text-xs">6</span>
+                        </div>
+                        <span class="font-geist font-bold text-lg text-on-background">6el1 Digital Solutions</span>
+                    </div>
+                    <p class="text-on-surface-variant text-sm max-w-xs">
+                        Puente entre ingeniería de rigor y la estrategia creativa de IA.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-geist font-bold text-on-background uppercase tracking-wider mb-4">Enlaces</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-on-surface-variant hover:text-primary">Aviso Legal</a></li>
+                        <li><a href="#" class="text-sm text-on-surface-variant hover:text-primary">Privacidad</a></li>
+                        <li><a href="#" class="text-sm text-on-surface-variant hover:text-primary">Cookies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-geist font-bold text-on-background uppercase tracking-wider mb-4">Newsletter</h3>
+                    <p class="text-sm text-on-surface-variant mb-4">Recibe insights sobre IA y estrategia digital.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Email" class="min-w-0 flex-1 bg-white border border-outline rounded-custom px-3 py-2 text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                        <button type="submit" class="bg-primary text-white px-4 py-2 rounded-custom text-sm font-bold transition-all">Enviar</button>
+                    </form>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-on-surface-variant">&copy; {% now "Y" %} 6el1 Digital Solutions. Todos los derechos reservados.</p>
+                <div class="flex space-x-6">
+                    <!-- Social icons could go here -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
