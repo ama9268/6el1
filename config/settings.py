@@ -31,7 +31,11 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0').split(',')
+if '*' not in ALLOWED_HOSTS and not DEBUG:
+    # Añadir comodín si estamos en producción y no se definieron hosts específicos
+    # Opcional: puedes ser más estricto aquí una vez configurado el dominio
+    pass
 
 
 # Application definition
@@ -45,12 +49,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third party apps
     'tailwind',
-    'django_browser_reload',
+    'theme',
     # Local apps
     'core',
     'dashboard',
-    'theme',
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ['django_browser_reload']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,8 +67,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += ['django_browser_reload.middleware.BrowserReloadMiddleware']
 
 ROOT_URLCONF = 'config.urls'
 
@@ -155,4 +163,38 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-NPM_BIN_PATH = os.getenv('NPM_BIN_PATH', r"C:\Program Files\nodejs\npm.cmd")
+# Detección dinámica de NPM según el sistema operativo
+if os.name == 'nt':  # Windows
+    NPM_BIN_PATH = os.getenv('NPM_BIN_PATH', r"C:\Program Files\nodejs\npm.cmd")
+else:  # Linux / Docker
+    NPM_BIN_PATH = os.getenv('NPM_BIN_PATH', '/usr/bin/npm')
+
+# Configuración de Logging para Producción
+# Esto permite ver los errores de Django en los logs de Docker
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
+}
