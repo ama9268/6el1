@@ -19,6 +19,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar el proyecto
 COPY . .
 
+# Instalar dependencias de Node y construir Tailwind
+WORKDIR /app/theme/static_src
+RUN npm install
+WORKDIR /app
+RUN python manage.py tailwind build
+
 # Permisos para el entrypoint
 RUN chmod +x entrypoint.sh
 

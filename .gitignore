@@ -48,6 +48,5 @@ Thumbs.db
 # Project specific
 .agent/
 scratch/
-node_modules/
-static/
-staticfiles/
+/node_modules/
+/staticfiles/
