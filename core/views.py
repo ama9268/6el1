@@ -1,5 +1,8 @@
 from django.views.generic import TemplateView
 
+class UnderConstructionView(TemplateView):
+    template_name = 'core/under_construction.html'
+
 class HomeView(TemplateView):
     template_name = 'core/home.html'
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SixTheOne Digital Solutions | Consultoría Estratégica y Soluciones Digitales{% endblock %}</title>
+    <title>{% block title %}SixelOne Digital Solutions | Consultoría Estratégica y Soluciones Digitales{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Soluciones digitales de alta gama centradas en IA y minimalismo técnico para empresas innovadoras.{% endblock %}">
     
     <!-- Fonts: Geist (Technical) & Inter (Readability) -->
@@ -20,6 +20,10 @@
         body {
             font-family: 'Inter', sans-serif;
             color: #191c1e;
+            background-image: url("{% static 'img/fondo.webp' %}");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
         }
         h1, h2, h3, h4, h5, h6, .font-technical {
             font-family: 'Geist', sans-serif;
@@ -42,7 +46,7 @@
                         <div class="w-8 h-8 bg-primary rounded-custom flex items-center justify-center">
                             <span class="text-white font-geist font-bold">6</span>
                         </div>
-                        <span class="font-geist font-bold text-xl tracking-tight text-on-background">SixTheOne</span>
+                        <span class="font-geist font-bold text-xl tracking-tight text-on-background">SixelOne</span>
                     </a>
                     <div class="hidden sm:ml-8 sm:flex sm:space-x-8">
                         <a href="/" class="border-transparent text-on-background hover:text-primary px-1 pt-1 text-sm font-medium transition-colors">Inicio</a>
@@ -80,7 +84,7 @@
                         <div class="w-6 h-6 bg-primary rounded-custom flex items-center justify-center">
                             <span class="text-white font-geist font-bold text-xs">6</span>
                         </div>
-                        <span class="font-geist font-bold text-lg text-on-background">SixTheOne Digital Solutions</span>
+                        <span class="font-geist font-bold text-lg text-on-background">SixelOne Digital Solutions</span>
                     </div>
                     <p class="text-on-surface-variant text-sm max-w-xs">
                         Puente entre ingeniería de rigor y la estrategia creativa de IA.
